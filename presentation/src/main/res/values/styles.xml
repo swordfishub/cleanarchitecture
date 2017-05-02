@@ -1,0 +1,43 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="app_theme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorControlNormal">@color/white</item>
+        <item name="android:buttonStyle">@style/button_style</item>
+        <item name="android:windowContentTransitions">true</item>
+        <!-- specify enter and exit transitions -->
+        <item name="android:windowEnterTransition">@android:transition/move</item>
+        <item name="android:windowExitTransition">@android:transition/move</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+    </style>
+
+    <style name="button_style" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="row_card_view" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardCornerRadius">1dp</item>
+        <item name="cardElevation">2dp</item>
+    </style>
+
+    <style name="house_title">
+        <item name="android:textSize">@dimen/book_title_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="publish_date">
+        <item name="android:textSize">@dimen/publish_date_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>
