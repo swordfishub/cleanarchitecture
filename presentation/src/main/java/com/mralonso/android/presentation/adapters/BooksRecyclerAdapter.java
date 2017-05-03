@@ -7,38 +7,57 @@ import android.view.ViewGroup;
 import com.mralonso.android.domain.data.Book;
 import com.mralonso.android.presentation.R;
 import com.mralonso.android.presentation.holders.BookRecyclerViewHolder;
-import com.mralonso.android.presentation.holders.FooterViewHolder;
 import com.mralonso.android.presentation.listeners.BookClickListener;
-import com.mralonso.android.presentation.views.EndlessRecyclerView;
 
-public class BooksRecyclerAdapter extends EndlessRecyclerView<Book> {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-    BookClickListener mBookClickListener;
+public class BooksRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
+    private List<Book> mData;
+    private BookClickListener mBookClickListener;
+
+    //region constructor
 
     public BooksRecyclerAdapter(BookClickListener propertyClickListener) {
         super();
         mBookClickListener = propertyClickListener;
+        mData = new ArrayList<>();
     }
 
+    //region constructor
+
+    //region public methods
+
+    public void addItems(Collection<Book> newData) {
+        if (newData == null) return;
+        mData.addAll(newData);
+        notifyDataSetChanged();
+    }
+
+    //endregion public methods
+
+    //region RecyclerView.Adapter<RecyclerView.ViewHolder>
+
     @Override
-    protected RecyclerView.ViewHolder getItemView(LayoutInflater inflater, ViewGroup parent) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         return new BookRecyclerViewHolder(inflater.inflate(R.layout.book_card_layout, parent, false), mBookClickListener);
     }
 
     @Override
-    protected RecyclerView.ViewHolder getFooterView(LayoutInflater inflater, ViewGroup parent) {
-        return new FooterViewHolder(inflater.inflate(R.layout.loading_more_footer, parent, false));
-    }
-
-    @Override
-    protected void bindItem(RecyclerView.ViewHolder holder, Book book) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         BookRecyclerViewHolder itemViewHolder = (BookRecyclerViewHolder) holder;
-        itemViewHolder.bindBook(book);
+        itemViewHolder.bindBook(mData.get(position));
+        return;
     }
 
     @Override
-    protected void bindFooter(RecyclerView.ViewHolder holder) {
-        FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
-        footerViewHolder.bindFooter();
+    public int getItemCount() {
+        return mData.size();
     }
+
+    //endregion RecyclerView.Adapter<RecyclerView.ViewHolder>
+
 }

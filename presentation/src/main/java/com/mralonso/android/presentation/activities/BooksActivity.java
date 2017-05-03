@@ -109,7 +109,7 @@ public class BooksActivity extends PortraitBaseActivity implements BooksView, Bo
     @Override
     public void showBooks(ArrayList<Book> books) {
         mLoading.setVisibility(View.GONE);
-        mBooksAdapter.addItems(books, false);
+        mBooksAdapter.addItems(books);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
@@ -143,7 +143,6 @@ public class BooksActivity extends PortraitBaseActivity implements BooksView, Bo
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mBooksAdapter = new BooksRecyclerAdapter(this);
-        mBooksAdapter.setLoadMoreItemsListener(this);
         mRecyclerView.setAdapter(mBooksAdapter);
     }
 
