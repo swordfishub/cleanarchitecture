@@ -4,7 +4,7 @@ import com.mralonso.android.domain.data.Book;
 
 import java.util.ArrayList;
 
-public interface BooksActivityViewInterface {
+public interface BooksView {
 
     void close();
 
@@ -12,11 +12,7 @@ public interface BooksActivityViewInterface {
 
     void showBooks(ArrayList<Book> books);
 
-    void showError();
+    void showError(boolean show);
 
-    void hideError();
-
-    void showLoading();
-
-    void hideLoading();
+    void showLoading(boolean show);
 }

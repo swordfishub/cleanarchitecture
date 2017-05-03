@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class BooksPresenter extends AbstractPresenter implements BooksCallback {
 
-    BooksActivityViewInterface mBooksActivityView;
+    BooksView mBooksView = new DummyBooksView();
     DeviceNetworkManager mDeviceNetworkManager;
     BooksUseCase mBooksUseCase;
 
@@ -22,12 +22,15 @@ public class BooksPresenter extends AbstractPresenter implements BooksCallback {
 
     public BooksPresenter(Executor executor, MainThread mainThread,
                           DeviceNetworkManager networkManager,
-                          BooksActivityViewInterface booksActivityViewInterface) {
+                          BooksView booksView) {
 
         super(executor, mainThread);
 
         mDeviceNetworkManager = networkManager;
-        mBooksActivityView = booksActivityViewInterface;
+
+        if(booksView!=null) {
+            mBooksView = booksView;
+        }
     }
 
     //endregion constructor
@@ -38,11 +41,10 @@ public class BooksPresenter extends AbstractPresenter implements BooksCallback {
     public void startPresenting() {
         super.startPresenting();
 
-        if(mBooksActivityView!=null){
-            mBooksActivityView.showLoading();
-        }
-        mBooksUseCase = new BooksUseCase(mExecutor, mMainThread);
+        mBooksView.showLoading(true);
+
         BooksRepository repository = new DataRepositoryFactory().getDataDefaultRepository(mDeviceNetworkManager);
+        mBooksUseCase = new BooksUseCase(mExecutor, mMainThread);
         mBooksUseCase.setRepository(repository);
         mBooksUseCase.setCallback(this);
         mBooksUseCase.execute();
@@ -54,25 +56,17 @@ public class BooksPresenter extends AbstractPresenter implements BooksCallback {
     //region public methods
 
     public void back() {
-        if(mBooksActivityView !=null) {
-            mBooksActivityView.close();
-        }
+        mBooksView.close();
     }
 
     public void retry() {
-        if(mBooksActivityView !=null) {
-            mBooksActivityView.hideError();
-            mBooksActivityView.showLoading();
-        }
-        if(mBooksUseCase!=null) {
-            mBooksUseCase.execute();
-        }
+        mBooksView.showError(false);
+        mBooksView.showLoading(true);
+        mBooksUseCase.execute();
     }
 
     public void bookSelected(Book book) {
-        if(mBooksActivityView !=null) {
-            mBooksActivityView.showBookDetail(book);
-        }
+        mBooksView.showBookDetail(book);
     }
 
     //endregion public methods
@@ -81,18 +75,14 @@ public class BooksPresenter extends AbstractPresenter implements BooksCallback {
 
     @Override
     public void onBooksReceived(ArrayList<Book> books) {
-        if(mBooksActivityView !=null) {
-            mBooksActivityView.hideLoading();
-            mBooksActivityView.showBooks(books);
-        }
+        mBooksView.showLoading(false);
+        mBooksView.showBooks(books);
     }
 
     @Override
     public void onBooksNotReceived() {
-        if(mBooksActivityView !=null) {
-            mBooksActivityView.hideLoading();
-            mBooksActivityView.showError();
-        }
+        mBooksView.showLoading(false);
+        mBooksView.showError(true);
     }
 
     //endregion BooksCallback

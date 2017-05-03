@@ -12,7 +12,7 @@ import com.mralonso.android.presentation.presenters.AbstractPresenter;
 
 public class BookDetailPresenter extends AbstractPresenter implements BookDetailCallback {
 
-    BookDetailViewInteface mBookDetailViewInteface;
+    BookDetailView mBookDetailView;
     DeviceNetworkManager mDeviceNetworkManager;
     String mBookId;
 
@@ -20,8 +20,8 @@ public class BookDetailPresenter extends AbstractPresenter implements BookDetail
         super(executor, mainThread);
     }
 
-    public void setDefaultView(BookDetailViewInteface booksView){
-        mBookDetailViewInteface = booksView;
+    public void setDefaultView(BookDetailView booksView){
+        mBookDetailView = booksView;
     }
 
     public void setBookId(String bookId){
@@ -29,8 +29,8 @@ public class BookDetailPresenter extends AbstractPresenter implements BookDetail
     }
 
     public void onBackPressed(){
-        if(mBookDetailViewInteface !=null) {
-            mBookDetailViewInteface.close();
+        if(mBookDetailView !=null) {
+            mBookDetailView.close();
         }
     }
 
@@ -57,7 +57,7 @@ public class BookDetailPresenter extends AbstractPresenter implements BookDetail
 
     @Override
     public void onBookDetailsReceived(BookDetails bookDetails) {
-        mBookDetailViewInteface.showBookDetails(bookDetails);
+        mBookDetailView.showBookDetails(bookDetails);
     }
 
     @Override

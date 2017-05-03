@@ -2,7 +2,7 @@ package com.mralonso.android.presentation.screens.detail;
 
 import com.mralonso.android.domain.data.BookDetails;
 
-public interface BookDetailViewInteface {
+public interface BookDetailView {
 
     void close();
 

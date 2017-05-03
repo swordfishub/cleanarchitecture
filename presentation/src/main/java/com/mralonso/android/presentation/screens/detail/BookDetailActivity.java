@@ -17,7 +17,7 @@ import com.mralonso.android.presentation.execution.ThreadExecutor;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BookDetailActivity extends PortraitBaseActivity implements BookDetailViewInteface {
+public class BookDetailActivity extends PortraitBaseActivity implements BookDetailView {
 
     private BookDetailPresenter mPresenter;
 
@@ -69,7 +69,7 @@ public class BookDetailActivity extends PortraitBaseActivity implements BookDeta
 
     //endregion BaseActivity
 
-    //region BooksActivityViewInterface
+    //region BooksView
 
     @Override
     public void close() {
@@ -85,5 +85,5 @@ public class BookDetailActivity extends PortraitBaseActivity implements BookDeta
     }
 
 
-    //endregion BooksActivityViewInterface
+    //endregion BooksView
 }
