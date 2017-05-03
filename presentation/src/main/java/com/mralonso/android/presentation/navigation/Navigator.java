@@ -1,6 +1,10 @@
 package com.mralonso.android.presentation.navigation;
 
 import android.app.Activity;
+import android.content.Intent;
+
+import com.mralonso.android.domain.data.Book;
+import com.mralonso.android.presentation.screens.detail.BookDetailActivity;
 
 public class Navigator {
 
@@ -19,6 +23,13 @@ public class Navigator {
 
     public void finishActivity(Activity activity){
         activity.finish();
+    }
+
+    public void openBookDetail(Activity activity, Book book){
+        Intent intent = new Intent(activity, BookDetailActivity.class);
+        intent.putExtra("BOOK_TITLE_EXTRA", book.getTitle());
+        intent.putExtra("BOOK_ID_EXTRA", book.getId());
+        activity.startActivity(intent);
     }
 
 }

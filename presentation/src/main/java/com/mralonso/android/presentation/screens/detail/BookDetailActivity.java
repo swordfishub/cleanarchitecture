@@ -1,25 +1,23 @@
-package com.mralonso.android.presentation.activities;
+package com.mralonso.android.presentation.screens.detail;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mralonso.android.data.utils.DeviceNetworkManager;
 import com.mralonso.android.domain.data.BookDetails;
 import com.mralonso.android.presentation.R;
+import com.mralonso.android.presentation.activities.PortraitBaseActivity;
 import com.mralonso.android.presentation.execution.SingletonMainThread;
 import com.mralonso.android.presentation.execution.ThreadExecutor;
-import com.mralonso.android.presentation.presenters.BookDetailPresenter;
-import com.mralonso.android.presentation.viewInterfaces.BookDetailView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BookDetailActivity extends PortraitBaseActivity implements BookDetailView {
+public class BookDetailActivity extends PortraitBaseActivity implements BookDetailViewInteface {
 
     private BookDetailPresenter mPresenter;
 
@@ -55,6 +53,10 @@ public class BookDetailActivity extends PortraitBaseActivity implements BookDeta
         mPresenter.setNetworkManager(new DeviceNetworkManager(this));
         mPresenter.setDefaultView(this);
         mPresenter.setBookId(bookId);
+
+        if(mPresenter!=null){
+            mPresenter.create();
+        }
     }
 
     @Override
@@ -102,7 +104,7 @@ public class BookDetailActivity extends PortraitBaseActivity implements BookDeta
 
     //endregion BaseActivity
 
-    //region BooksView
+    //region BooksActivityViewInterface
 
     @Override
     public void close() {
@@ -118,5 +120,5 @@ public class BookDetailActivity extends PortraitBaseActivity implements BookDeta
     }
 
 
-    //endregion BooksView
+    //endregion BooksActivityViewInterface
 }

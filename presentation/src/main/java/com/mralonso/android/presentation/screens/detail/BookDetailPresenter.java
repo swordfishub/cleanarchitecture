@@ -1,4 +1,4 @@
-package com.mralonso.android.presentation.presenters;
+package com.mralonso.android.presentation.screens.detail;
 
 import com.mralonso.android.data.repositories.DataRepositoryFactory;
 import com.mralonso.android.data.utils.DeviceNetworkManager;
@@ -8,11 +8,12 @@ import com.mralonso.android.domain.execution.Executor;
 import com.mralonso.android.domain.execution.MainThread;
 import com.mralonso.android.domain.repositories.BooksRepository;
 import com.mralonso.android.domain.useCases.BookDetailUseCase;
-import com.mralonso.android.presentation.viewInterfaces.BookDetailView;
+import com.mralonso.android.presentation.presenters.AbstractPresenter;
+import com.mralonso.android.presentation.presenters.BasePresenter;
 
 public class BookDetailPresenter extends AbstractPresenter implements BasePresenter, BookDetailCallback {
 
-    BookDetailView mBookDetailView;
+    BookDetailViewInteface mBookDetailViewInteface;
     DeviceNetworkManager mDeviceNetworkManager;
     String mBookId;
 
@@ -20,8 +21,8 @@ public class BookDetailPresenter extends AbstractPresenter implements BasePresen
         super(executor, mainThread);
     }
 
-    public void setDefaultView(BookDetailView booksView){
-        mBookDetailView = booksView;
+    public void setDefaultView(BookDetailViewInteface booksView){
+        mBookDetailViewInteface = booksView;
     }
 
     public void setBookId(String bookId){
@@ -29,8 +30,8 @@ public class BookDetailPresenter extends AbstractPresenter implements BasePresen
     }
 
     public void onBackPressed(){
-        if(mBookDetailView !=null) {
-            mBookDetailView.close();
+        if(mBookDetailViewInteface !=null) {
+            mBookDetailViewInteface.close();
         }
     }
 
@@ -38,14 +39,10 @@ public class BookDetailPresenter extends AbstractPresenter implements BasePresen
         mDeviceNetworkManager = deviceNetworkManager;
     }
 
-    public void loadMoreItems(){
-
-    }
-
     //region BasePresenter
 
     @Override
-    public void resume() {
+    public void create() {
         BookDetailUseCase bookDetailUseCase = new BookDetailUseCase(mExecutor, mMainThread);
         bookDetailUseCase.setId(mBookId);
         BooksRepository repository = new DataRepositoryFactory().getDataDefaultRepository(mDeviceNetworkManager);
@@ -55,19 +52,16 @@ public class BookDetailPresenter extends AbstractPresenter implements BasePresen
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void stop() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void destroy() {
+    public void stop() {}
 
-    }
+    @Override
+    public void destroy() {}
 
     //endregion BasePresenter
 
@@ -75,7 +69,7 @@ public class BookDetailPresenter extends AbstractPresenter implements BasePresen
 
     @Override
     public void onBookDetailsReceived(BookDetails bookDetails) {
-        mBookDetailView.showBookDetails(bookDetails);
+        mBookDetailViewInteface.showBookDetails(bookDetails);
     }
 
     @Override

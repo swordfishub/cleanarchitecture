@@ -21,4 +21,7 @@
     <dimen name="publish_date_size">18sp</dimen>
     <dimen name="publish_date_padding">10dp</dimen>
 
+    <!-- Error -->
+    <dimen name="padding_error">10dp</dimen>
+
 </resources>

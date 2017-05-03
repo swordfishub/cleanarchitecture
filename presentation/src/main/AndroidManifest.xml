@@ -8,7 +8,7 @@
         android:supportsRtl="true"
         android:theme="@style/app_theme">
 
-    <activity android:name="com.mralonso.android.presentation.activities.BooksActivity">
+    <activity android:name=".screens.books.BooksActivity">
 
         <intent-filter>
             <action android:name="android.intent.action.MAIN"/>
@@ -17,7 +17,7 @@
 
     </activity>
 
-    <activity android:name="com.mralonso.android.presentation.activities.BookDetailActivity"/>
+    <activity android:name=".screens.detail.BookDetailActivity"/>
 
     </application>
 

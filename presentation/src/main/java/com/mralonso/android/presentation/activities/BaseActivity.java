@@ -34,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         else return super.onKeyUp(keyCode, event);
     }
 
-    public abstract void back();
+    protected abstract void back();
 
     public void setHomeActionBarToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
