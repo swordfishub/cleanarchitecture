@@ -53,42 +53,7 @@ public class BookDetailActivity extends PortraitBaseActivity implements BookDeta
         mPresenter.setNetworkManager(new DeviceNetworkManager(this));
         mPresenter.setDefaultView(this);
         mPresenter.setBookId(bookId);
-
-        if(mPresenter!=null){
-            mPresenter.create();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(mPresenter!=null){
-            mPresenter.resume();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if(mPresenter!=null){
-            mPresenter.pause();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(mPresenter!=null){
-            mPresenter.stop();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mPresenter!=null){
-            mPresenter.destroy();
-        }
+        mPresenter.startPresenting();
     }
 
     //endregion AppCompatActivity

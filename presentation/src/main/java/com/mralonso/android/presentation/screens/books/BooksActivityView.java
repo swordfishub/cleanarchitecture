@@ -32,7 +32,7 @@ public class BooksActivityView extends LinearLayout implements BooksActivityView
 
     private BooksPresenter mPresenter;
     private BooksRecyclerAdapter mAdapter;
-    private BooksActivityInterface mActivity;
+    private BooksActivityInterface mActivityInterface;
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -100,11 +100,11 @@ public class BooksActivityView extends LinearLayout implements BooksActivityView
     //public methods
 
     public void init(BooksActivityInterface booksActivityInterface, BooksPresenter booksPresenter){
-        mActivity = booksActivityInterface;
+        mActivityInterface = booksActivityInterface;
         mPresenter = booksPresenter;
 
-        if(mActivity!=null){
-            mActivity.setToolbar(mToolbar);
+        if(mActivityInterface !=null){
+            mActivityInterface.setToolbar(mToolbar);
         }
     }
 
@@ -125,15 +125,15 @@ public class BooksActivityView extends LinearLayout implements BooksActivityView
 
     @Override
     public void close() {
-        if(mActivity!=null) {
-            mActivity.close();
+        if(mActivityInterface !=null) {
+            mActivityInterface.close();
         }
     }
 
     @Override
     public void showBookDetail(Book book) {
-        if(mActivity!=null) {
-            mActivity.openBookDetail(book);
+        if(mActivityInterface !=null) {
+            mActivityInterface.openBookDetail(book);
         }
     }
 

@@ -9,11 +9,10 @@ import com.mralonso.android.domain.execution.MainThread;
 import com.mralonso.android.domain.repositories.BooksRepository;
 import com.mralonso.android.domain.useCases.BooksUseCase;
 import com.mralonso.android.presentation.presenters.AbstractPresenter;
-import com.mralonso.android.presentation.presenters.BasePresenter;
 
 import java.util.ArrayList;
 
-public class BooksPresenter extends AbstractPresenter implements BasePresenter, BooksPresenterInterface, BooksCallback {
+public class BooksPresenter extends AbstractPresenter implements BooksCallback {
 
     BooksActivityViewInterface mBooksActivityView;
     DeviceNetworkManager mDeviceNetworkManager;
@@ -33,10 +32,12 @@ public class BooksPresenter extends AbstractPresenter implements BasePresenter, 
 
     //endregion constructor
 
-    //region BasePresenter
+    //region AbstractPresenter
 
     @Override
-    public void create() {
+    public void startPresenting() {
+        super.startPresenting();
+
         if(mBooksActivityView!=null){
             mBooksActivityView.showLoading();
         }
@@ -47,30 +48,17 @@ public class BooksPresenter extends AbstractPresenter implements BasePresenter, 
         mBooksUseCase.execute();
     }
 
-    @Override
-    public void resume() {}
 
-    @Override
-    public void pause() {}
+    //endregion AbstractPresenter
 
-    @Override
-    public void stop() {}
+    //region public methods
 
-    @Override
-    public void destroy() {}
-
-    //endregion BasePresenter
-
-    //region BooksPresenterInterface
-
-    @Override
     public void back() {
         if(mBooksActivityView !=null) {
             mBooksActivityView.close();
         }
     }
 
-    @Override
     public void retry() {
         if(mBooksActivityView !=null) {
             mBooksActivityView.hideError();
@@ -81,14 +69,13 @@ public class BooksPresenter extends AbstractPresenter implements BasePresenter, 
         }
     }
 
-    @Override
     public void bookSelected(Book book) {
         if(mBooksActivityView !=null) {
             mBooksActivityView.showBookDetail(book);
         }
     }
 
-    //endregion BooksPresenterInterface
+    //endregion public methods
 
     //region BooksCallback
 

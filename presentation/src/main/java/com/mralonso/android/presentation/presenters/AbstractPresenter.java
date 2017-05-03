@@ -12,4 +12,8 @@ public abstract class AbstractPresenter {
         mExecutor = executor;
         mMainThread = mainThread;
     }
+
+    public void startPresenting(){}
+
+    public void stopPresenting(){}
 }

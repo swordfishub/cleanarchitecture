@@ -9,9 +9,8 @@ import com.mralonso.android.domain.execution.MainThread;
 import com.mralonso.android.domain.repositories.BooksRepository;
 import com.mralonso.android.domain.useCases.BookDetailUseCase;
 import com.mralonso.android.presentation.presenters.AbstractPresenter;
-import com.mralonso.android.presentation.presenters.BasePresenter;
 
-public class BookDetailPresenter extends AbstractPresenter implements BasePresenter, BookDetailCallback {
+public class BookDetailPresenter extends AbstractPresenter implements BookDetailCallback {
 
     BookDetailViewInteface mBookDetailViewInteface;
     DeviceNetworkManager mDeviceNetworkManager;
@@ -39,10 +38,11 @@ public class BookDetailPresenter extends AbstractPresenter implements BasePresen
         mDeviceNetworkManager = deviceNetworkManager;
     }
 
-    //region BasePresenter
+    //region AbstractPresenter
 
     @Override
-    public void create() {
+    public void startPresenting() {
+        super.startPresenting();
         BookDetailUseCase bookDetailUseCase = new BookDetailUseCase(mExecutor, mMainThread);
         bookDetailUseCase.setId(mBookId);
         BooksRepository repository = new DataRepositoryFactory().getDataDefaultRepository(mDeviceNetworkManager);
@@ -51,19 +51,7 @@ public class BookDetailPresenter extends AbstractPresenter implements BasePresen
         bookDetailUseCase.execute();
     }
 
-    @Override
-    public void resume() {}
-
-    @Override
-    public void pause() {}
-
-    @Override
-    public void stop() {}
-
-    @Override
-    public void destroy() {}
-
-    //endregion BasePresenter
+    //endregion AbstractPresenter
 
     //region BooksCallback
 
