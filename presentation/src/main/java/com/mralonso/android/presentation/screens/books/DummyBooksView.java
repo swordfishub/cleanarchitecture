@@ -4,10 +4,6 @@ import com.mralonso.android.domain.data.Book;
 
 import java.util.ArrayList;
 
-/**
- * Created by miguel.rodriguez on 3/5/17.
- */
-
 public class DummyBooksView implements BooksView {
 
     @Override
