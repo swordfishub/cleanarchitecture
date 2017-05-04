@@ -33,9 +33,6 @@ public class BooksPresenter extends AbstractPresenter implements BooksCallback {
     @Override
     public void startPresenting() {
         super.startPresenting();
-
-        mBooksView.showLoading(true);
-
         mBooksUseCase.execute();
     }
 

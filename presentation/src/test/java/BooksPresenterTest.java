@@ -31,9 +31,6 @@ public class BooksPresenterTest extends TestCase {
     Executor mockExecutor;
 
     @Mock
-    DeviceNetworkManager mockDeviceNetworkManager;
-
-    @Mock
     BooksView mockBooksView;
 
     @Mock
@@ -55,7 +52,6 @@ public class BooksPresenterTest extends TestCase {
     @Test
     public void testStartPresenting() throws Exception{
         mBooksPresenter.startPresenting();
-        verify(mockBooksView).showLoading(true);
         verify(mockUseCase).execute();
     }
 
@@ -70,7 +66,7 @@ public class BooksPresenterTest extends TestCase {
         mBooksPresenter.startPresenting();
         mBooksPresenter.retry();
         verify(mockBooksView).showError(false);
-        verify(mockBooksView, times(2)).showLoading(true);
+        verify(mockBooksView).showLoading(true);
     }
 
     @Test

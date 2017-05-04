@@ -3,5 +3,6 @@
     <string name="books_title">Books</string>
     <string name="loading_more_books">Loading more books</string>
     <string name="error_loading_books">Error loading books</string>
+    <string name="error_loading_book_details">Error loading book details</string>
     <string name="retry">Try again</string>
 </resources>

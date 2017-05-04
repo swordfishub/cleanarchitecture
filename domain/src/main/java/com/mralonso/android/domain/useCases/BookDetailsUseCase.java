@@ -6,13 +6,13 @@ import com.mralonso.android.domain.execution.Executor;
 import com.mralonso.android.domain.execution.MainThread;
 import com.mralonso.android.domain.repositories.BooksRepository;
 
-public class BookDetailUseCase extends AbstractUseCase implements UseCase {
+public class BookDetailsUseCase extends AbstractUseCase implements UseCase {
 
     BooksRepository mRepository;
     BookDetailCallback mCallback;
     String mBookId;
 
-    public BookDetailUseCase(Executor threadExecutor, MainThread mainThread) {
+    public BookDetailsUseCase(Executor threadExecutor, MainThread mainThread) {
         super(threadExecutor, mainThread);
     }
 
