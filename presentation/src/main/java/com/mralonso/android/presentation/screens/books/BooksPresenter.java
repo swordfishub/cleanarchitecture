@@ -1,12 +1,7 @@
 package com.mralonso.android.presentation.screens.books;
 
-import com.mralonso.android.data.repositories.DataRepositoryFactory;
-import com.mralonso.android.data.utils.DeviceNetworkManager;
 import com.mralonso.android.domain.callbacks.BooksCallback;
 import com.mralonso.android.domain.data.Book;
-import com.mralonso.android.domain.execution.Executor;
-import com.mralonso.android.domain.execution.MainThread;
-import com.mralonso.android.domain.repositories.BooksRepository;
 import com.mralonso.android.domain.useCases.BooksUseCase;
 import com.mralonso.android.presentation.presenters.AbstractPresenter;
 
@@ -15,18 +10,16 @@ import java.util.ArrayList;
 public class BooksPresenter extends AbstractPresenter implements BooksCallback {
 
     BooksView mBooksView = new DummyBooksView();
-    DeviceNetworkManager mDeviceNetworkManager;
     BooksUseCase mBooksUseCase;
 
     //region constructor
 
-    public BooksPresenter(Executor executor, MainThread mainThread,
-                          DeviceNetworkManager networkManager,
-                          BooksView booksView) {
+    public BooksPresenter(BooksUseCase booksUseCase, BooksView booksView) {
 
-        super(executor, mainThread);
+        super();
 
-        mDeviceNetworkManager = networkManager;
+        mBooksUseCase = booksUseCase;
+        mBooksUseCase.setCallback(this);
 
         if(booksView!=null) {
             mBooksView = booksView;
@@ -43,13 +36,8 @@ public class BooksPresenter extends AbstractPresenter implements BooksCallback {
 
         mBooksView.showLoading(true);
 
-        BooksRepository repository = new DataRepositoryFactory().getDataDefaultRepository(mDeviceNetworkManager);
-        mBooksUseCase = new BooksUseCase(mExecutor, mMainThread);
-        mBooksUseCase.setRepository(repository);
-        mBooksUseCase.setCallback(this);
         mBooksUseCase.execute();
     }
-
 
     //endregion AbstractPresenter
 

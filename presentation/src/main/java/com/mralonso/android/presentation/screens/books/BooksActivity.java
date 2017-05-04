@@ -8,8 +8,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.mralonso.android.data.repositories.DataRepositoryFactory;
 import com.mralonso.android.data.utils.DeviceNetworkManager;
 import com.mralonso.android.domain.data.Book;
+import com.mralonso.android.domain.repositories.BooksRepository;
+import com.mralonso.android.domain.useCases.BooksUseCase;
 import com.mralonso.android.presentation.R;
 import com.mralonso.android.presentation.activities.PortraitBaseActivity;
 import com.mralonso.android.presentation.adapters.BooksRecyclerAdapter;
@@ -105,9 +108,10 @@ public class BooksActivity extends PortraitBaseActivity implements BooksView, Bo
         setListView();
         setHomeActionBarToolbar(mToolbar);
 
-        mPresenter = new BooksPresenter(ThreadExecutor.getInstance(), SingletonMainThread.getInstance(),
-                new DeviceNetworkManager(this), this);
-
+        BooksRepository booksRepository = new DataRepositoryFactory().getDataDefaultRepository(new DeviceNetworkManager(this));
+        BooksUseCase booksUseCase = new BooksUseCase(ThreadExecutor.getInstance(), SingletonMainThread.getInstance());
+        booksUseCase.setRepository(booksRepository);
+        mPresenter = new BooksPresenter(booksUseCase, this);
         mPresenter.startPresenting();
     }
 

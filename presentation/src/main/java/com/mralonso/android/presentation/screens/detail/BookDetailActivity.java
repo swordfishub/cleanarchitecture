@@ -7,8 +7,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mralonso.android.data.repositories.DataRepositoryFactory;
 import com.mralonso.android.data.utils.DeviceNetworkManager;
 import com.mralonso.android.domain.data.BookDetails;
+import com.mralonso.android.domain.repositories.BooksRepository;
+import com.mralonso.android.domain.useCases.BookDetailUseCase;
 import com.mralonso.android.presentation.R;
 import com.mralonso.android.presentation.activities.PortraitBaseActivity;
 import com.mralonso.android.presentation.execution.SingletonMainThread;
@@ -49,10 +52,11 @@ public class BookDetailActivity extends PortraitBaseActivity implements BookDeta
         String bookId = getIntent().getStringExtra("BOOK_ID_EXTRA");
         getSupportActionBar().setTitle(bookTitle);
 
-        mPresenter = new BookDetailPresenter(ThreadExecutor.getInstance(), SingletonMainThread.getInstance());
-        mPresenter.setNetworkManager(new DeviceNetworkManager(this));
-        mPresenter.setDefaultView(this);
-        mPresenter.setBookId(bookId);
+        BooksRepository repository = new DataRepositoryFactory().getDataDefaultRepository(new DeviceNetworkManager(this));
+        BookDetailUseCase bookDetailUseCase = new BookDetailUseCase(ThreadExecutor.getInstance(), SingletonMainThread.getInstance());
+        bookDetailUseCase.setRepository(repository);
+        bookDetailUseCase.setId(bookId);
+        mPresenter = new BookDetailPresenter(bookDetailUseCase, this);
         mPresenter.startPresenting();
     }
 
