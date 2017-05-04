@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class BooksPresenterTest extends TestCase {

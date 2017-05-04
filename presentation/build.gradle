@@ -24,21 +24,27 @@ dependencies {
     ext {
         picassoVersion = '2.5.2'
         butterknifeVersion = "7.0.1"
-        supportVersion = '25.2.0'
+        supportVersion = '25.3.1'
         picassoVersion = '2.5.2'
+        junitVersion = '4.12'
+        mockitoVersion = '1.10.5'
+        espressoVersion = '2.2.2'
+        annotationsVersion = '15.0'
     }
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-core:1.10.5"
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "com.android.support:appcompat-v7:$supportVersion"
-    compile "com.android.support:cardview-v7:$supportVersion"
-    compile "com.jakewharton:butterknife:$butterknifeVersion"
     compile "com.android.support:recyclerview-v7:$supportVersion"
+    compile "com.android.support:cardview-v7:$supportVersion"
+    compile "com.android.support:support-annotations:$supportVersion"
+    compile "com.jakewharton:butterknife:$butterknifeVersion"
     compile "com.squareup.picasso:picasso:$picassoVersion"
     compile project(path: ':domain')
     compile project(path: ':data')
+    compile "org.jetbrains:annotations-java5:$annotationsVersion"
 }

@@ -14,12 +14,7 @@ import org.mockito.MockitoAnnotations;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-/**
- * Created by miguel.rodriguez on 4/5/17.
- */
 
 public class BookDetailsPresenterTest extends TestCase {
 

@@ -5,20 +5,26 @@ import com.mralonso.android.domain.data.BookDetails;
 import com.mralonso.android.domain.useCases.BookDetailsUseCase;
 import com.mralonso.android.presentation.presenters.AbstractPresenter;
 
+import org.jetbrains.annotations.NotNull;
+
 public class BookDetailsPresenter extends AbstractPresenter implements BookDetailCallback {
 
-    BookDetailsView mBookDetailsView = new DummyBookDetailsView();
+    BookDetailsView mBookDetailsView;
     BookDetailsUseCase mBookDetailsUseCase;
 
-    public BookDetailsPresenter(BookDetailsUseCase bookDetailsUseCase, BookDetailsView bookDetailsView) {
+    public BookDetailsPresenter(@NotNull BookDetailsUseCase bookDetailsUseCase,
+                                @NotNull BookDetailsView bookDetailsView)
+            throws IllegalArgumentException{
+
         super();
+
+        //noinspection ConstantConditions
+        if (bookDetailsUseCase==null || bookDetailsView==null) throw new IllegalArgumentException();
 
         mBookDetailsUseCase = bookDetailsUseCase;
         mBookDetailsUseCase.setCallback(this);
 
-        if(bookDetailsView !=null) {
-            mBookDetailsView = bookDetailsView;
-        }
+        mBookDetailsView = bookDetailsView;
     }
 
     //region public methods

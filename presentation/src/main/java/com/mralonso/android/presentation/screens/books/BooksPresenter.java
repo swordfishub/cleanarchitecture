@@ -5,25 +5,29 @@ import com.mralonso.android.domain.data.Book;
 import com.mralonso.android.domain.useCases.BooksUseCase;
 import com.mralonso.android.presentation.presenters.AbstractPresenter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class BooksPresenter extends AbstractPresenter implements BooksCallback {
 
-    BooksView mBooksView = new DummyBooksView();
+    BooksView mBooksView;
     BooksUseCase mBooksUseCase;
 
     //region constructor
 
-    public BooksPresenter(BooksUseCase booksUseCase, BooksView booksView) {
+    public BooksPresenter(@NotNull BooksUseCase booksUseCase, @NotNull BooksView booksView)
+            throws IllegalArgumentException{
 
         super();
+
+        //noinspection ConstantConditions
+        if (booksUseCase==null || booksView==null) throw new IllegalArgumentException();
 
         mBooksUseCase = booksUseCase;
         mBooksUseCase.setCallback(this);
 
-        if(booksView!=null) {
-            mBooksView = booksView;
-        }
+        mBooksView = booksView;
     }
 
     //endregion constructor
