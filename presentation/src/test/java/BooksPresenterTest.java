@@ -1,4 +1,3 @@
-import com.mralonso.android.data.utils.DeviceNetworkManager;
 import com.mralonso.android.domain.data.Book;
 import com.mralonso.android.domain.execution.Executor;
 import com.mralonso.android.domain.execution.MainThread;
@@ -76,7 +75,7 @@ public class BooksPresenterTest extends TestCase {
     }
 
     @Test
-    public void testOnBookReceived(){
+    public void testOnBooksReceived(){
         ArrayList<Book> mockBooks = new ArrayList<>();
         mBooksPresenter.onBooksReceived(mockBooks);
         verify(mockBooksView).showLoading(false);
@@ -84,8 +83,19 @@ public class BooksPresenterTest extends TestCase {
     }
 
     @Test
+    public void testOnEmptyBooksReceived(){
+        mBooksPresenter.onBooksEmptyReceived();
+        verify(mockBooksView).setEmptyErrorText();
+        verify(mockBooksView).showRetryButton(false);
+        verify(mockBooksView).showLoading(false);
+        verify(mockBooksView).showError(true);
+    }
+
+    @Test
     public void testOnBooksNotReceived(){
         mBooksPresenter.onBooksNotReceived();
+        verify(mockBooksView).setConnectionErrorText();
+        verify(mockBooksView).showRetryButton(true);
         verify(mockBooksView).showLoading(false);
         verify(mockBooksView).showError(true);
     }

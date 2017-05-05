@@ -5,8 +5,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.mralonso.android.data.repositories.DataRepositoryFactory;
 import com.mralonso.android.data.utils.DeviceNetworkManager;
@@ -42,6 +44,12 @@ public class BooksActivity extends PortraitBaseActivity implements BooksView, Bo
 
     @Bind(R.id.error)
     LinearLayout mError;
+
+    @Bind(R.id.retry)
+    Button mRetry;
+
+    @Bind(R.id.error_message)
+    TextView mErrorMessage;
 
     @OnClick(R.id.retry)
     public void onRetryClick(){
@@ -83,6 +91,21 @@ public class BooksActivity extends PortraitBaseActivity implements BooksView, Bo
     @Override
     public void showLoading(boolean show) {
         mLoading.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void setEmptyErrorText() {
+        mErrorMessage.setText(R.string.error_empty_books);
+    }
+
+    @Override
+    public void setConnectionErrorText() {
+        mErrorMessage.setText(R.string.error_loading_books);
+    }
+
+    @Override
+    public void showRetryButton(boolean show) {
+        mRetry.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     //endregion BooksView

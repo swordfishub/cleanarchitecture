@@ -30,15 +30,20 @@ public class BooksUseCase extends AbstractUseCase implements UseCase {
 
         ArrayList<Book> books = mRepository.obtainBooks("code");
 
-        if(books !=null){
-            postDefaultDataReceived(books);
+        if(books!=null){
+            if(books.isEmpty()){
+                postDataEmptyReceived();
+            }
+            else {
+                postDataReceived(books);
+            }
         }
         else{
-            postDefaultDataNotReceived();
+            postDataNotReceived();
         }
     }
 
-    private void postDefaultDataReceived(final ArrayList<Book> books){
+    public void postDataReceived(final ArrayList<Book> books){
         mMainThread.post(new Runnable() {
             @Override
             public void run() {
@@ -47,7 +52,16 @@ public class BooksUseCase extends AbstractUseCase implements UseCase {
         });
     }
 
-    private void postDefaultDataNotReceived(){
+    public void postDataEmptyReceived(){
+        mMainThread.post(new Runnable() {
+            @Override
+            public void run() {
+                mCallback.onBooksEmptyReceived();
+            }
+        });
+    }
+
+    public void postDataNotReceived(){
         mMainThread.post(new Runnable() {
             @Override
             public void run() {

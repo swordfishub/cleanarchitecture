@@ -1,13 +1,13 @@
 package com.mralonso.android.presentation.screens.detail;
 
-import com.mralonso.android.domain.callbacks.BookDetailCallback;
+import com.mralonso.android.domain.callbacks.BookDetailsCallback;
 import com.mralonso.android.domain.data.BookDetails;
 import com.mralonso.android.domain.useCases.BookDetailsUseCase;
 import com.mralonso.android.presentation.presenters.AbstractPresenter;
 
 import org.jetbrains.annotations.NotNull;
 
-public class BookDetailsPresenter extends AbstractPresenter implements BookDetailCallback {
+public class BookDetailsPresenter extends AbstractPresenter implements BookDetailsCallback {
 
     BookDetailsView mBookDetailsView;
     BookDetailsUseCase mBookDetailsUseCase;

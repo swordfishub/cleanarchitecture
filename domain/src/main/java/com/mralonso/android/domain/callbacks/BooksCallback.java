@@ -8,5 +8,7 @@ public interface BooksCallback {
 
     void onBooksReceived(ArrayList<Book> books);
 
+    void onBooksEmptyReceived();
+
     void onBooksNotReceived();
 }

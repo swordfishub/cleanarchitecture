@@ -69,8 +69,18 @@ public class BooksPresenter extends AbstractPresenter implements BooksCallback {
     }
 
     @Override
+    public void onBooksEmptyReceived() {
+        mBooksView.showLoading(false);
+        mBooksView.setEmptyErrorText();
+        mBooksView.showRetryButton(false);
+        mBooksView.showError(true);
+    }
+
+    @Override
     public void onBooksNotReceived() {
         mBooksView.showLoading(false);
+        mBooksView.setConnectionErrorText();
+        mBooksView.showRetryButton(true);
         mBooksView.showError(true);
     }
 

@@ -15,4 +15,10 @@ public interface BooksView {
     void showError(boolean show);
 
     void showLoading(boolean show);
+
+    void setEmptyErrorText();
+
+    void setConnectionErrorText();
+
+    void showRetryButton(boolean show);
 }

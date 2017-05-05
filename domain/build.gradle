@@ -1,7 +1,16 @@
 apply plugin: 'java'
 
 dependencies {
+
+    ext {
+        junitVersion = '4.12'
+        mockitoVersion = '1.10.5'
+    }
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
 }
 
 sourceCompatibility = "1.7"
