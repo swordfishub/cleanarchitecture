@@ -1,111 +1,87 @@
 package com.mralonso.android.presentation.screens.books;
 
-import com.mralonso.android.data.repositories.DataRepositoryFactory;
-import com.mralonso.android.data.utils.DeviceNetworkManager;
 import com.mralonso.android.domain.callbacks.BooksCallback;
 import com.mralonso.android.domain.data.Book;
-import com.mralonso.android.domain.execution.Executor;
-import com.mralonso.android.domain.execution.MainThread;
-import com.mralonso.android.domain.repositories.BooksRepository;
 import com.mralonso.android.domain.useCases.BooksUseCase;
 import com.mralonso.android.presentation.presenters.AbstractPresenter;
-import com.mralonso.android.presentation.presenters.BasePresenter;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class BooksPresenter extends AbstractPresenter implements BasePresenter, BooksPresenterInterface, BooksCallback {
+public class BooksPresenter extends AbstractPresenter implements BooksCallback {
 
-    BooksActivityViewInterface mBooksActivityView;
-    DeviceNetworkManager mDeviceNetworkManager;
+    BooksView mBooksView;
     BooksUseCase mBooksUseCase;
 
     //region constructor
 
-    public BooksPresenter(Executor executor, MainThread mainThread,
-                          DeviceNetworkManager networkManager,
-                          BooksActivityViewInterface booksActivityViewInterface) {
+    public BooksPresenter(@NotNull BooksUseCase booksUseCase, @NotNull BooksView booksView)
+            throws IllegalArgumentException{
 
-        super(executor, mainThread);
+        super();
 
-        mDeviceNetworkManager = networkManager;
-        mBooksActivityView = booksActivityViewInterface;
+        //noinspection ConstantConditions
+        if (booksUseCase==null || booksView==null) throw new IllegalArgumentException();
+
+        mBooksUseCase = booksUseCase;
+        mBooksUseCase.setCallback(this);
+
+        mBooksView = booksView;
     }
 
     //endregion constructor
 
-    //region BasePresenter
+    //region AbstractPresenter
 
     @Override
-    public void create() {
-        if(mBooksActivityView!=null){
-            mBooksActivityView.showLoading();
-        }
-        mBooksUseCase = new BooksUseCase(mExecutor, mMainThread);
-        BooksRepository repository = new DataRepositoryFactory().getDataDefaultRepository(mDeviceNetworkManager);
-        mBooksUseCase.setRepository(repository);
-        mBooksUseCase.setCallback(this);
+    public void startPresenting() {
+        super.startPresenting();
         mBooksUseCase.execute();
     }
 
-    @Override
-    public void resume() {}
+    //endregion AbstractPresenter
 
-    @Override
-    public void pause() {}
+    //region public methods
 
-    @Override
-    public void stop() {}
-
-    @Override
-    public void destroy() {}
-
-    //endregion BasePresenter
-
-    //region BooksPresenterInterface
-
-    @Override
     public void back() {
-        if(mBooksActivityView !=null) {
-            mBooksActivityView.close();
-        }
+        mBooksView.close();
     }
 
-    @Override
     public void retry() {
-        if(mBooksActivityView !=null) {
-            mBooksActivityView.hideError();
-            mBooksActivityView.showLoading();
-        }
-        if(mBooksUseCase!=null) {
-            mBooksUseCase.execute();
-        }
+        mBooksView.showError(false);
+        mBooksView.showLoading(true);
+        mBooksUseCase.execute();
     }
 
-    @Override
     public void bookSelected(Book book) {
-        if(mBooksActivityView !=null) {
-            mBooksActivityView.showBookDetail(book);
-        }
+        mBooksView.showBookDetail(book);
     }
 
-    //endregion BooksPresenterInterface
+    //endregion public methods
 
     //region BooksCallback
 
     @Override
     public void onBooksReceived(ArrayList<Book> books) {
-        if(mBooksActivityView !=null) {
-            mBooksActivityView.hideLoading();
-            mBooksActivityView.showBooks(books);
-        }
+        mBooksView.showLoading(false);
+        mBooksView.showBooks(books);
+    }
+
+    @Override
+    public void onBooksEmptyReceived() {
+        mBooksView.showLoading(false);
+        mBooksView.setEmptyErrorText();
+        mBooksView.showRetryButton(false);
+        mBooksView.showError(true);
     }
 
     @Override
     public void onBooksNotReceived() {
-        if(mBooksActivityView !=null) {
-            mBooksActivityView.hideLoading();
-            mBooksActivityView.showError();
-        }
+        mBooksView.showLoading(false);
+        mBooksView.setConnectionErrorText();
+        mBooksView.showRetryButton(true);
+        mBooksView.showError(true);
     }
 
     //endregion BooksCallback

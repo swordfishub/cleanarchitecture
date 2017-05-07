@@ -17,7 +17,7 @@
 
     </activity>
 
-    <activity android:name=".screens.detail.BookDetailActivity"/>
+    <activity android:name=".screens.detail.BookDetailsActivity"/>
 
     </application>
 
